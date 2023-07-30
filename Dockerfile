@@ -9,7 +9,7 @@ ARG BASE_IMAGE="kasmweb/java-dev"
 FROM $BASE_IMAGE:$BASE_TAG
 
 USER root
-RUN useradd -r-u 1000 kasm-user
+RUN useradd -r -u 1000 kasm-user
 
 RUN apt-get update \
     && apt-get install -y sudo \
