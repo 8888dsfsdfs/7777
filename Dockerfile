@@ -1,18 +1,18 @@
-### 构建自hub.docker.com上的基础公共镜像，需要有docker hub账号
-### 启动镜像的命令：sudo docker run --rm -it --shm-size=512m -p 6901:6901 -e VNC_PW=password 镜像名
-### 访问地址： https://IP_OF_SERVER:6901
-### User : kasm_user
-### Password: password
+FROM ubuntu:latest
 
-ARG BASE_TAG="1.12.0-rolling"
-ARG BASE_IMAGE="kasmweb/java-dev"
-FROM $BASE_IMAGE:$BASE_TAG
-
-USER root
+#注意，换行用TAB
 
 RUN apt-get update \
-    && apt-get install -y sudo \
-    && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
-    && rm -rf /var/lib/apt/list/*
-
-USER 1000
+    && apt-get install -y vim \
+    && apt-get install -y tree \
+    && apt-get install -y net-tools \
+    && apt-get install -y git \
+    && apt-get install -y nginx \
+    && apt-get install -y redis-server \
+    && apt-get install -y python2.7 \
+    && apt-get install -y python3.7 \
+    && apt-get install -y python3-pip \
+    && apt-get install -y python-pip python-dev build-essential \
+    && apt-get install -y mysql-server \
+    && apt install -y mysql-client \
+    && apt install -y libmysqlclient-dev
