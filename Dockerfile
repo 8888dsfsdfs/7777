@@ -1,17 +1,24 @@
-FROM nvidia/cuda:11.4.2-devel-ubuntu20.04
 
-MAINTAINER yayan.ye <yeyanan90@gmail.com>
+sudo yum update
+sudo yum install docker
+sudo groupadd docker
+sudo gpasswd -a $USER docker
+sudo service docker start
+sudo systemctl enable docker.service
 
-ARG DEBIAN_FRONTEND=noninteractive
 
-# ===================================================================================
-# ros1
-# ===================================================================================
-RUN apt-get update && \
-	apt-get install -y lsb-release && \
-        sh -c '. /etc/lsb-release && echo "deb https://mirrors.aliyun.com/ros/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list' && \
-        apt-get install -y curl && \
-        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
-        apt-get update && \
-        apt-get install -y ros-noetic-desktop-full
-        
+mkdir empty-container && cd $_
+cat > Dockerfile
+Dockerfile:
+FROM ubuntu:22.04
+CMD tail -f /dev/null
+docker build -t empty-container .
+docker run -d empty-container
+docker ps
+(Copy container_id)
+
+
+docker exec -it <container_id> /bin/sh
+(docker exec -it <container_id> /bin/bash)
+uname -a
+cat /etc/os-release
