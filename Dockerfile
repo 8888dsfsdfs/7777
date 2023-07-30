@@ -1,6 +1,6 @@
-FROM Ubuntu
+FROM FreeBSD
 RUN apt update
-RUN Ubuntu_FRONTEND=noninteractive apt install qemu-kvm *zenhei* xz-utils dbus-x11 curl firefox-esr gnome-system-monitor mate-system-monitor  git xfce4 xfce4-terminal tightvncserver wget   -y
+RUN FreeBSD_FRONTEND=noninteractive apt install qemu-kvm *zenhei* xz-utils dbus-x11 curl firefox-esr gnome-system-monitor mate-system-monitor  git xfce4 xfce4-terminal tightvncserver wget   -y
 RUN wget https://github.com/novnc/noVNC/archive/refs/tags/v1.2.0.tar.gz
 RUN curl -LO https://proot.gitlab.io/proot/bin/proot
 RUN chmod 755 proot
