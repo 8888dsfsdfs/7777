@@ -1,19 +1,17 @@
-### 构建自hub.docker.com上的基础公共镜像，需要有docker hub账号
-### 启动镜像的命令：sudo docker run --rm -it --shm-size=512m -p 6901:6901 -e VNC_PW=password 镜像名
-### 访问地址： https://IP_OF_SERVER:6901
-### User : kasm_user
-### Password: password
+FROM nvidia/cuda:11.4.2-devel-ubuntu20.04
 
-ARG BASE_TAG="1.12.0-rolling"
-ARG BASE_IMAGE="kasmweb/java-dev"
-FROM $BASE_IMAGE:$BASE_TAG
+MAINTAINER yayan.ye <yeyanan90@gmail.com>
 
-USER root
-RUN useradd -r -u 1000 kasm-user
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
-    && apt-get install -y sudo \
-    && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
-    && rm -rf /var/lib/apt/list/*
-
-USER 1000
+# ===================================================================================
+# ros1
+# ===================================================================================
+RUN apt-get update && \
+	apt-get install -y lsb-release && \
+        sh -c '. /etc/lsb-release && echo "deb https://mirrors.aliyun.com/ros/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list' && \
+        apt-get install -y curl && \
+        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
+        apt-get update && \
+        apt-get install -y ros-noetic-desktop-full
+        
